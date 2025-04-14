@@ -1,1 +1,14 @@
-<p>subscribe works!</p>
+<h1>Register</h1>
+<fieldset>
+    <label>Username:</label>
+    <input [(ngModel)]="username" required type="email" />
+</fieldset>
+<fieldset>
+    <label>Password:</label>
+    <input type="password" [(ngModel)]="password"/>
+</fieldset>
+<fieldset>
+    <label>Confirm:</label>
+    <input type="password" [(ngModel)]="confirm"/>
+</fieldset>
+<button class="btn btn-primary offset-2" (click)="subscribe()">Submit</button>

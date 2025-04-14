@@ -3,6 +3,8 @@ import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors'
 import destinationController from './controllers/destinations.js'
+import passport from 'passport';
+import User from './models/user.js';
 import dotenv from "dotenv";
 dotenv.config();
 
