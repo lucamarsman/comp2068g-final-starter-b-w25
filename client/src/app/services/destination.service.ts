@@ -12,7 +12,7 @@ export class DestinationService {
   serverUrl: string = environment.serverUrl;
 
   getDestinations(){
-    return this.http.get(`${this.serverUrl}/fetchAll`, {
+    return this.http.get(`${this.serverUrl}/destinations/fetchAll`, {
       
     });
   }
