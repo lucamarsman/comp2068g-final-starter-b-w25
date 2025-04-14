@@ -1,1 +1,21 @@
-<p>destinations works!</p>
+<div class="container mt-4">
+    <h2 class="mb-3">Destination List</h2>
+
+    <table class="table table-striped table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>City</th>
+          <th>Country</th>
+          <th>Activities</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let Destination of DESTINATIONS; let i = index">
+            <td>{{ Destination.name }}</td>
+            <td>{{ Destination.city }}</td>
+            <td>{{ Destination.country }}</td>
+            <td>{{ Destination.activities }}</td>
+        </tr>
+      </tbody>
+    </table>
