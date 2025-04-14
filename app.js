@@ -2,6 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import cors from 'cors'
+import destinationController from './controllers/destinations.js'
+import dotenv from "dotenv";
+dotenv.config();
 
 // CREATE EXPRESS APP
 const app = express();
@@ -20,6 +23,8 @@ app.use(cors({
     credentials: true,
     allowedHeaders: 'Content-Type,Authorization'
 }));
+
+app.use('/v1/api/destinations', destinationController);
 
 // RUN SERVER
 app.listen(3000, () => {
