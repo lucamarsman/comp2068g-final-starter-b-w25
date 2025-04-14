@@ -14,4 +14,8 @@ export class AuthService {
   register(subscriber: any) {
     return this.http.post(`${this.serverUrl}/destinations/subscribe`, subscriber);
   }
+
+  login(subscriber: any){
+    return this.http.post(`${this.serverUrl}/destinations/login`, subscriber, {withCredentials: true});
+  }
 }

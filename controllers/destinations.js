@@ -1,8 +1,37 @@
 import express from "express"
 import Destination from "../models/recipe.js"
 import Subscriber from "../models/subscriber.js"
+import jwt from "jsonwebtoken"
 
 const router = express.Router();
+
+const generateToken = (user) => {
+    const payload = {
+        id: user._id,
+        username: user.username
+    };
+
+    const jwtOptions = { 
+        expiresIn: '1hr'
+    };
+
+    return jwt.sign(payload, process.env.PASSPORT_SECRET, jwtOptions);
+};
+
+const setTokenCookie = (res, token) => {
+    res.cookie('examToken', token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'None'
+    });
+};
+
+const clearTokenCookie = (res) => {
+    res.cookie('examToken', '', {
+        httpOnly: true,
+        expires: new Date(0)
+    });
+};
 
 router.get("/fetchAll", async (req, res) => {
     let recipes = await Destination.find();
@@ -30,5 +59,21 @@ router.post("/subscribe", async(req, res) => {
         return res.status(400).json(err);
     }
 });
+
+router.post("/login", async(req, res) => {
+    Subscriber.authenticate()(req.body.username, req.body.password, (err, sub, info) => {
+        if (err) {
+            return res.status(500).json({ msg: 'Server error', err });
+        }
+
+        if (!sub) {
+            return res.status(401).json({ msg: 'Invalid username or password', info });
+        }
+
+        const token = generateToken(sub);
+        setTokenCookie(res, token);
+        return res.status(200).json({ username: sub.username });
+    });
+})
 
 export default router;
