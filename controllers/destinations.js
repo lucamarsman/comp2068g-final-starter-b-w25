@@ -74,6 +74,16 @@ router.post("/login", async(req, res) => {
         setTokenCookie(res, token);
         return res.status(200).json({ username: sub.username });
     });
+});
+
+router.get('/logout', async(req, res) => {
+    try {
+        clearTokenCookie(res);
+        return res.status(200).json({ msg: 'User logged out' });
+    }
+    catch (err) {
+        return res.status(400).json(err);
+    }
 })
 
 export default router;

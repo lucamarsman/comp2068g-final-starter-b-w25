@@ -18,4 +18,8 @@ export class AuthService {
   login(subscriber: any){
     return this.http.post(`${this.serverUrl}/destinations/login`, subscriber, {withCredentials: true});
   }
+
+  logout(){
+    return this.http.get(`${this.serverUrl}/destinations/logout`, {withCredentials: true});
+  }
 }
