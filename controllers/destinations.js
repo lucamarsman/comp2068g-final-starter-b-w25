@@ -34,12 +34,31 @@ const clearTokenCookie = (res) => {
 };
 
 router.get("/fetchAll", async (req, res) => {
-    let recipes = await Destination.find();
-    if (!recipes) {
-        return res.status(204).json({ err: 'No Results' });
-    }
+    try {
+        const token = req.cookies.examToken;
+        console.log(token);
 
-    return res.status(200).json(recipes);
+        if (token) {
+            const decode = jwt.verify(token, process.env.PASSPORT_SECRET);
+            if (decode) {
+                let recipes = await Destination.find();
+                if (!recipes) {
+                    return res.status(204).json({ err: 'No Results' });
+                }
+
+                return res.status(200).json(recipes);
+            }
+            else {
+                return res.status(401).json({ msg: 'Unauthorized' });
+            }
+        }
+        else {
+            return res.status(401).json({ msg: 'Unauthorized' });
+        }
+    }
+    catch (err) {
+        return res.status(400).json({ err: `Bad Request: ${err}` });
+    }
 });
 
 router.post("/subscribe", async(req, res) => {

@@ -13,7 +13,7 @@ export class DestinationService {
 
   getDestinations(){
     return this.http.get(`${this.serverUrl}/destinations/fetchAll`, {
-      
+      withCredentials: true
     });
   }
 
